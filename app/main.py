@@ -8,12 +8,14 @@ def init_scanner(host: str):
     print("-" * 50)
 
 def scan_target(host: str, ports: range):
-    resolve_host(host)
+    host_resolved = resolve_host(host)
+    open_ports: list[dict] = []
     for port in ports:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             result = s.connect_ex((host, port))
             if result == 0:
-                print(f"Port: {port} | Open")
+                open_ports.append({port: "open"})
+    print(open_ports)
 
 def resolve_host(host: str):
     if is_valid_ip(host):
