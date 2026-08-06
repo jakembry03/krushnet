@@ -1,21 +1,12 @@
 import socket
 from app.validators import is_valid_ip
+from app.helpers import resolve_host
 
 def init_scanner(host: str):
     print("WELCOME TO KRUSHNET")
     print("-" * 50)
     print(f"Beginning scan for: {host}")
     print("-" * 50)
-
-def resolve_host(host: str) -> str | None:
-    if is_valid_ip(host):
-        return host
-
-    try:
-        return socket.gethostbyname(host)
-    except socket.gaierror:
-        print(f"Unable to resolve hostname: {host}")
-        return None
 
 
 def scan_target(host: str, ports: range) -> list[dict] | None:

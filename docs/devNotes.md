@@ -14,6 +14,10 @@ V 0.1.0 = Basic single target port scanner
         result = s.connect_ex((host, port))
         if result == 0:
             open_ports.append({port: "open"})
-            
+
 5. Output complete formatted results
+
+V 0.2.0
+1. Capture banners
+2. Scan an entire network
 
