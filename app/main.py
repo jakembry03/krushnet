@@ -16,10 +16,7 @@ def scan_target(host: str, ports: range) -> list[dict] | None:
             result = s.connect_ex((ip, port))
             if result == 0:
                 open_ports.append({port: "open"})
-                return open_ports
-            else:
-                return None
-            
+    return open_ports
 
 def resolve_host(host: str):
     try:
