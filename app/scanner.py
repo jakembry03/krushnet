@@ -2,7 +2,7 @@ import socket
 from app.helpers import resolve_host
 
 
-def scan_target(host: str, ports: range) -> list[dict] | None:
+def scan_target(host: str, ports: range) -> list[dict]:
     ip = resolve_host(host)
 
     if ip is None:
@@ -31,13 +31,31 @@ def scan_target(host: str, ports: range) -> list[dict] | None:
 
 
 def grab_banner(sock: socket.socket) -> str | None:
+    chunks: list[bytes] = []
+    closed = False
+
     try:
-        banner = sock.recv(1024)
-        return banner.decode(errors="ignore").strip()
-    except socket.timeout:
-        return None
-    except OSError:
-        return None
+        while len(b"".join(chunks)) < 4096:
+            chunk = sock.recv(1024)
+            if not chunk:
+                closed = True
+                break
+            chunks.append(chunk)
+    except (TimeoutError, OSError):
+        pass
+
+    raw = b"".join(chunks)
+
+    if not raw:
+        return "<closed by peer, no data>" if closed else None
+
+    # errors="replace" keeps a marker for bad bytes instead of deleting them
+    text = raw.decode("utf-8", errors="replace")
+    # make control characters visible rather than invisible
+    text = "".join(c if c.isprintable() or c in "/t" else f"//x{ord(c):02x}" for c in text)
+
+    return text.strip() or f"<{len(raw)} non-text bytes: {raw[:32].hex(' ')}>"
+
 
 
 
