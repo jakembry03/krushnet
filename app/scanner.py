@@ -1,4 +1,5 @@
 import socket
+import ssl
 from app.helpers import resolve_host
 
 
@@ -19,13 +20,30 @@ def scan_target(host: str, ports: range) -> list[dict]:
             result = sock.connect_ex((ip, port))
 
             if result == 0:
-                banner = grab_banner(sock)
+                if port == 80:
+                    banner = grab_http_banner(sock, ip)
+                    open_ports.append({
+                        "port": port,
+                        "status": "open",
+                        "banner": banner
+                    })
 
-                open_ports.append({
-                    "port": port,
-                    "status": "open",
-                    "banner": banner
-                })
+                elif port == 443:
+                    banner = grab_https_banner(sock, ip)
+                    open_ports.append({
+                        "port": port,
+                        "status": "open",
+                        "banner": banner
+                    })
+
+                else:   
+                    banner = grab_banner(sock)
+
+                    open_ports.append({
+                        "port": port,
+                        "status": "open",
+                        "banner": banner
+                    })
 
     return open_ports
 
@@ -55,6 +73,55 @@ def grab_banner(sock: socket.socket) -> str | None:
     text = "".join(c if c.isprintable() or c in "/t" else f"//x{ord(c):02x}" for c in text)
 
     return text.strip() or f"<{len(raw)} non-text bytes: {raw[:32].hex(' ')}>"
+
+def grab_http_banner(sock: socket.socket, host: str) -> str | None:
+    request = (
+        f"HEAD / HTTP/1.1\r\n"
+        f"Host: {host}\r\n"
+        f"Connection: close\r\n"
+        f"\r\n"
+    )
+
+    try:
+        sock.sendall(request.encode())
+
+        response = sock.recv(4096)
+
+        return response.decode(errors="ignore")
+
+    except (socket.timeout, OSError):
+        return None
+
+
+def grab_https_banner(sock: socket.socket, host: str) -> str | None:
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+    # Useful for your own lab/network scanner where devices may have self-signed certificate
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+
+    try:
+        tls_sock = context.wrap_socket(
+            sock,
+            server_hostname=host
+        )
+
+        request = (
+            f"HEAD / HTTP/1.1\r\n"
+            f"Host: {host}\r\n"
+            f"Connection: close\r\n"
+            f"\r\n"
+        )
+
+        tls_sock.sendall(request.encode())
+
+        response = tls_sock.recv(4096)
+
+        return response.decode(errors="ignore")
+
+    except (ssl.SSLError, socket.timeout, OSError):
+        return None
+    
 
 
 
