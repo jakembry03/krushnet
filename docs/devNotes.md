@@ -19,5 +19,8 @@ V 0.1.0 = Basic single target port scanner
 
 V 0.2.0
 1. Capture banners
+    banner = receive all
+    if banner has a value
+        print banner
 2. Scan an entire network
 
