@@ -1,4 +1,4 @@
-from app.validators import is_valid_ip
+from app.validators import is_valid_ip, is_valid_network
 import socket
 
 

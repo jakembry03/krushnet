@@ -1,19 +1,24 @@
 import socket
 import ssl
+import ipaddress
 from app.helpers import resolve_host
 from app.validators import is_valid_network
 
 
-def scan_target(host: str, ports: range) -> list[dict]:
+def run_scan(host: str, ports: range) -> list[dict]:
     ip = resolve_host(host)
+    open_ports: list[dict] = []
 
     if ip is None:
         return []
 
     print(f"Resolved address: {ip}")
 
-    open_ports: list[dict] = []
+    open_ports = scan_target(ip, ports, open_ports)
+    return open_ports
 
+
+def scan_target(ip: str, ports: range, open_ports: list[dict]) -> list[dict]:
     for port in ports:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.settimeout(0.5)

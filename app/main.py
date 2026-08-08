@@ -1,7 +1,7 @@
 import socket
 from app.validators import is_valid_ip
 from app.helpers import resolve_host
-from app.scanner import scan_target
+from app.scanner import run_scan
 
 def init_scanner(host: str):
     print("WELCOME TO KRUSHNET")
@@ -21,7 +21,7 @@ def main() -> None:
     ports = range(1, 101)
 
     init_scanner(host)
-    open_ports = scan_target(host, ports)
+    open_ports = run_scan(host, ports)
 
     print("-" * 50)
 
