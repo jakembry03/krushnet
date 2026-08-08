@@ -29,6 +29,9 @@ v0.2.0
     If hostname or IP, scan runs normally after resolving the name, if network interface, then the scan runs for the network
     Then the same would be for a range of IP addresses
 
+    Lets do network interface first. Have a validator function called is_valid_network() and it will be what checks the host for a network interface. 
+    There is probably something int he ip address module for this.
+
 v0.3.0
 1. Store results in SQLite database and read results from the database when outputting
 2. Grab OS and host information from the device if available

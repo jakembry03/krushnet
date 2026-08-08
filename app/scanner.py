@@ -1,6 +1,7 @@
 import socket
 import ssl
 from app.helpers import resolve_host
+from app.validators import is_valid_network
 
 
 def scan_target(host: str, ports: range) -> list[dict]:
@@ -44,7 +45,6 @@ def scan_target(host: str, ports: range) -> list[dict]:
                         "status": "open",
                         "banner": banner
                     })
-
     return open_ports
 
 

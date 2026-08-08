@@ -1,0 +1,1 @@
+Krushnet is a personal passion project. The goal of Krushnet is to become a private network operations tool that I use to monitor and control my own local network. 
