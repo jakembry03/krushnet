@@ -1,7 +1,9 @@
-import socket
 from app.validators import is_valid_ip
 from app.helpers import resolve_host
 from app.scanner import run_scan
+from app.cli import parse_args
+from app.discovery import scan_network
+
 
 def init_scanner(host: str):
     print("WELCOME TO KRUSHNET")
@@ -10,28 +12,27 @@ def init_scanner(host: str):
     print("-" * 50)
 
 
-def main() -> None:
-    host = input("Please enter the host: ").strip()
-
-    if not host:
-        print("A hostname or IP address is required.")
-        return
-
-    # Use a small range while testing the scanner
-    ports = range(1, 101)
+def main():
+    args = parse_args()
+    host = args.target
+    ports = args.ports
 
     init_scanner(host)
-    open_ports = run_scan(host, ports)
 
-    print("-" * 50)
+    if args.discover:
+        active_hosts = scan_network(host)
+        print(f"Active Hosts for {host}")
+        for host in active_hosts:
+            print(host)
 
-    if open_ports:
-        print("Open ports:")
-        for port_info in open_ports:
-            print(f"Port {port_info['port']}: {port_info['status']}: {port_info['banner']}")
     else:
-        print("No open ports were found.")
-
+        open_ports = run_scan(host, ports)
+        if open_ports:
+            print("Open Ports:")
+            for port_info in open_ports:
+                print(f"Port {port_info['port']}: {port_info['status']}: {port_info['banner']}")
+        else:
+            print("No open ports were found.")
 
 if __name__ == "__main__":
     main()

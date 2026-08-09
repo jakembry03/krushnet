@@ -24,13 +24,6 @@ v0.2.0
         print banner
 2. Have functionality for all major banners, HTTP/HTTPS and others.
     if port == 80 or 443 then send http header or https header
-3. Scan an entire network
-    Would need a function that determines what format the given host is in. If it is in hostname, ip address, or network interface.
-    If hostname or IP, scan runs normally after resolving the name, if network interface, then the scan runs for the network
-    Then the same would be for a range of IP addresses
-
-    Lets do network interface first. Have a validator function called is_valid_network() and it will be what checks the host for a network interface. 
-    There is probably something int he ip address module for this.
 
 v0.3.0
 1. Store results in SQLite database and read results from the database when outputting
