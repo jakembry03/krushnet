@@ -6,6 +6,11 @@
 
         <title>KrushNet Dashboard</title>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
     </head>
 
@@ -17,8 +22,15 @@
             <aside class="sidebar">
 
                 <div class="logo">
-                    <h1>KRUSHNET</h1>
-                    <p>Network Security</p>
+                    <h1 class="krushnet-title">KRUSHNET</h1>
+
+                    <p class="krushnet-quote">Set your heart ablaze!</p>
+
+                    <img
+                        class="logo-image"
+                        src="{{ url_for('static', path='/images/rengoku.png') }}"
+                        alt="Rengoku Picture"
+                    >
                 </div>
 
                 <nav class="navigation">
@@ -97,7 +109,7 @@
                 <!--Device Section-->
                 <section class="device-section">
 
-                    <div class="section-header">
+                    <div class="recent-devices">
                         <div>
                             <h2>Recent Devices</h2>
                             <p>Devices discovered on your network</p>
