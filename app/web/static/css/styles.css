@@ -1,15 +1,354 @@
+/* -------------------------
+    General Page
+---------------------------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: whitesmoke;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: white;
     color: orange;
 }
 
-h1 {
-    text-align: center;
-    color: orange;
+/* ------------------------
+    Main Dashboard Layout
+--------------------------*/
+
+.dashboard {
+    display: flex;
+
+    min-height: 100vh;
 }
 
-p {
-    text-align: center;
-    color: orange;
+/* Sidebar */
+
+.sidebar {
+    width: 240px;
+    background-color: rgb(255, 136, 0);
+    padding: 30px 20px;
+    border-right: 1px solid rgb(29, 29, 29);
+}
+
+.logo {
+    margin-bottom: 40px;
+}
+
+.logo h1 {
+    color: gold;
+
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
+.logo p {
+    color: white;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Navigation Links */
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.nav-link {
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 15px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+
+.nav-link:hover {
+    background-color: gold;
+
+    color: white;
+}
+
+
+.nav-link.active {
+    background-color: rgb(145, 145, 145);
+
+    color: rgb(250, 250, 248);
+}
+
+
+/* ------------------------------
+   MAIN CONTENT
+------------------------------ */
+
+.main-content {
+    flex: 1;
+
+    padding: 30px 40px;
+}
+
+
+/* ------------------------------
+   TOP BAR
+------------------------------ */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 40px;
+}
+
+
+.topbar h2 {
+    font-size: 26px;
+}
+
+
+.topbar p {
+    color: #6b7280;
+
+    margin-top: 5px;
+}
+
+
+.scanner-status {
+    background-color: #111827;
+
+    padding: 10px 15px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+}
+
+
+.status-dot {
+    display: inline-block;
+
+    width: 8px;
+    height: 8px;
+
+    background-color: #22c55e;
+
+    border-radius: 50%;
+
+    margin-right: 7px;
+}
+
+
+/* ------------------------------
+   SECTION HEADERS
+------------------------------ */
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.section-header h2 {
+    font-size: 20px;
+}
+
+
+.section-header p {
+    color: #6b7280;
+
+    margin-top: 4px;
+
+    font-size: 14px;
+}
+
+
+/* ------------------------------
+   SCAN BUTTON
+------------------------------ */
+
+.scan-button {
+    background-color: rgb(255, 153, 0);
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.scan-button:hover {
+    background-color: #16a34a;
+
+    transform: translateY(-2px);
+}
+
+
+/* ------------------------------
+   STAT CARDS
+------------------------------ */
+
+.stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 40px;
+}
+
+
+.stat-card {
+    background-color: #111827;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    border: 1px solid #1f2937;
+}
+
+
+.stat-card h3 {
+    font-size: 38px;
+
+    margin: 10px 0;
+
+    color: white;
+}
+
+
+.stat-title {
+    color: #9ca3af;
+
+    font-size: 14px;
+}
+
+
+.stat-description {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+.alert-card h3 {
+    color: #f87171;
+}
+
+
+/* ------------------------------
+   DEVICE TABLE
+------------------------------ */
+
+.device-section {
+    background-color: #111827;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    border: 1px solid #1f2937;
+}
+
+
+.device-table {
+    width: 100%;
+}
+
+
+.table-header,
+.device-row {
+    display: grid;
+
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+
+    padding: 15px;
+}
+
+
+.table-header {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #1f2937;
+}
+
+
+.device-row {
+    border-bottom: 1px solid #1f2937;
+
+    transition: 0.2s;
+}
+
+
+.device-row:hover {
+    background-color: #172033;
+}
+
+
+.device-row:last-child {
+    border-bottom: none;
+}
+
+
+/* ------------------------------
+   DEVICE STATUS
+------------------------------ */
+
+.online {
+    color: #22c55e;
+}
+
+
+.offline {
+    color: #ef4444;
+}
+
+
+/* ------------------------------
+   SMALLER SCREENS
+------------------------------ */
+
+@media (max-width: 900px) {
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+
+    .sidebar {
+        width: 180px;
+    }
+
+
+    .main-content {
+        padding: 20px;
+    }
+
 }

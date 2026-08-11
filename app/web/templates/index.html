@@ -6,10 +6,148 @@
 
         <title>KrushNet Dashboard</title>
 
-        <link rel="stylesheet" href="{{url_for('static', path='/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
     </head>
+
     <body>
-        <h1>Welcome to KrushNet's Official Dashboard</h1>
-        <p>KrushNet is my official Network Operations Tool</p>
+
+        <div class="dashboard">
+
+            <!--Sidebar-->
+            <aside class="sidebar">
+
+                <div class="logo">
+                    <h1>KRUSHNET</h1>
+                    <p>Network Security</p>
+                </div>
+
+                <nav class="navigation">
+                    <a class="nav-link active" href="*">Dashboard</a>
+                    <a class="nav-link" href="*">Devices</a>
+                    <a class="nav-link" href="*">Scans</a>
+                    <a class="nav-link" href="*">Alerts</a>
+                    <a class="nav-link" href="*">Settings</a>
+                </nav>
+
+            </aside>
+
+            <!--Main Page-->
+            <main class="main-content">
+
+                <!--Top bar-->
+                <header class="topbar">
+
+                    <div>
+                        <h2>Dashboard</h2>
+                        <p>Monitor your network</p>
+                    </div>
+
+                    <div class="scanner-status">
+                        <span class="status-dot"></span>
+                        Scanner Online
+                    </div>
+
+                </header>
+
+                <!--Overview section-->
+                <section class="overview">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Network Overview</h2>
+                            <p>Current network statistics</p>
+                        </div>
+
+                        <button class="scan-button">
+                            Start Scan
+                        </button>
+                    </div>
+
+                    <!--Statistic Cards-->
+                    <div class="stats">
+
+                        <div class="stat-card">
+                            <p class="stat-title">Devices Online</p>
+                            <h3>12</h3>
+                            <p class="stat-description">
+                                Active network devices
+                            </p>
+                        </div>
+
+                        <div class="stat-card">
+                            <p class="stat-title">Open Ports</p>
+                            <h3>27</h3>
+                            <p class="stat-description">
+                                Detected across network
+                            </p>
+                        </div>
+
+                        <div class="stat-card alert-card">
+                            <p class="stat-title">Alerts</p>
+                            <h3>3</h3>
+                            <p class="stat-description">
+                                Require Attention
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!--Device Section-->
+                <section class="device-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Recent Devices</h2>
+                            <p>Devices discovered on your network</p>
+                        </div>
+                    </div>
+
+                    <div class="device-table">
+
+                        <div class="table-header">
+                            <span>Device</span>
+                            <span>IP Address</span>
+                            <span>Status</span>
+                            <span>Ports</span>
+                        </div>
+
+                        <div class="device-row">
+                            <span>Desktop-PC</span>
+                            <span>192.168.1.10</span>
+
+                            <span class="online">
+                                • Online
+                            </span>
+
+                            <span>7</span>
+                        </div>
+
+                        <div class="device-row">
+                            <span>Rasberry Pi</span>
+                            <span>192.168.1.15</span>
+
+                            <span class="online">
+                                • Online
+                            </span>
+
+                            <span>4</span>
+                        </div>
+                        
+                        <div class="device-row">
+                            <span>Living Room TV</span>
+                            <span>192.168.1.21</span>
+
+                            <span class="offline">
+                                • Offline
+                            </span>
+
+                            <span>0</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </body>
 </html>
