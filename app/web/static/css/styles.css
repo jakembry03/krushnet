@@ -11,12 +11,12 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
 
-    background-color: #fffdff;
-    color: #d83049;
+    background-color: #000;
+    color: whitesmoke;
 }
 
 .recent-devices {
-    color: #f5d274;
+    color: white;
 }
 
 /* ------------------------
@@ -33,7 +33,7 @@ body {
 
 .sidebar {
     width: 240px;
-    background-color: #d83049;
+    background-color: #181818;
     padding: 30px 20px;
     border-right: 1px solid rgb(29, 29, 29);
 }
@@ -43,7 +43,7 @@ body {
 }
 
 .krushnet-title {
-    color: #f5d274;
+    color: rgb(255, 115, 0);
     font-family: "Bangers", sans-serif;
     font-size: 50px;
     letter-spacing: 2px;
@@ -57,16 +57,6 @@ body {
 
     margin-top: 5px;
     margin-bottom: 15px;
-}
-
-.logo-image {
-    display: block;
-
-    width: 160px;
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin: 20px auto;
 }
 
 /* Navigation Links */
@@ -92,14 +82,14 @@ body {
 
 
 .nav-link:hover {
-    background-color: #f5d274;
+    background-color: orange;
 
     color: white;
 }
 
 
 .nav-link.active {
-    background-color: #f5d274;
+    background-color: orange;
 
     color: #fffdff;
 }
@@ -187,7 +177,7 @@ body {
 
 
 .section-header p {
-    color: #6b7280;
+    color: white;
 
     margin-top: 4px;
 
@@ -200,7 +190,7 @@ body {
 ------------------------------ */
 
 .scan-button {
-    background-color: rgb(255, 153, 0);
+    background-color: orange;
 
     color: white;
 
@@ -261,14 +251,14 @@ body {
 
 
 .stat-title {
-    color: #9ca3af;
+    color: whitesmoke;
 
     font-size: 14px;
 }
 
 
 .stat-description {
-    color: #6b7280;
+    color: whitesmoke;
 
     font-size: 13px;
 }
