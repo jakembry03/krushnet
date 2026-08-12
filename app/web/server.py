@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from datetime import datetime, timezone
 
 app = FastAPI()
 
@@ -21,6 +22,15 @@ def home(request: Request):
         request=request,
         name="index.html"
     )
+
+@app.get("/api/status")
+def get_status():
+    return {
+        "status": "online",
+        "server_time": datetime.now(timezone.utc).isoformat()
+    }
+
+
 
 
 

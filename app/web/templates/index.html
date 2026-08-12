@@ -12,6 +12,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+
+        <script
+            src="{{ url_for('static', path='/js/app.js') }}"
+            defer
+        ></script>
     </head>
 
     <body>
@@ -47,9 +52,14 @@
                         <p>Monitor your network</p>
                     </div>
 
-                    <div class="scanner-status">
-                        <span class="status-dot"></span>
-                        Scanner Online
+                    <div class="backend-status">
+
+                        <div>
+                            <span id="status-dot" class="status-dot"></span>
+                            <span id="status-text">Checking backend...</span>
+                        </div>
+
+                        <p id="last-check">Waiting for response...</p>
                     </div>
 
                 </header>
