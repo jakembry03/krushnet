@@ -1,7 +1,6 @@
 from app.validators import is_valid_ip, is_valid_network
 import socket
 
-
 def resolve_host(host: str) -> str | None:
     if is_valid_ip(host):
         return host
