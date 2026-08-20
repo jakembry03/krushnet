@@ -1,0 +1,73 @@
+# ----------
+# Python
+# ----------
+
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ----------
+# Virtual Environments
+# ----------
+
+.venv/
+venv/
+env/
+ENV/
+
+# ----------
+# TESTING
+# ----------
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ----------
+# Type checking
+# ----------
+
+.mypy_cache/
+.ruff_cache/
+
+# ----------
+# Build / packaging output
+# ----------
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------
+# Environment Variables / Secrets
+# ----------
+
+.env
+.env.*
+!.env.example
+
+# -----------
+# IDE / editor files
+# -----------
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------
+# Operating system files
+# ----------
+
+.DS_Store
+Thumbs.db
+
+# ----------
+# Logs
+# ----------
+
+*.log
+
