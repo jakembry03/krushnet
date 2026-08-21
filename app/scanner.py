@@ -1,11 +1,9 @@
 import socket
-import ssl
-import ipaddress
 from app.helpers import resolve_host
-from app.validators import is_valid_network
 from app.banner import grab_banner, grab_http_banner, grab_https_banner
-from app.dataset import PortScanResult
+from app.dataset import PortScanResult, HostInfo, HostScanResult
 from app.service_map import get_service_name
+from app.host_info import get_host_info
 
 
 def run_scan(host: str, ports: list[int]) -> list[PortScanResult]:
@@ -53,11 +51,3 @@ def scan_target(ip: str, ports: list[int]) -> list[PortScanResult]:
                     )
                 )
     return open_ports
-
-
-
-    
-
-
-
-

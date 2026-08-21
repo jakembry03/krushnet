@@ -1,7 +1,8 @@
 import ipaddress
 import subprocess
-from app.dataset import PortScanResult
+from app.dataset import PortScanResult, HostScanResult
 from app.scanner import run_scan
+from app.host_info import get_host_info
 
 def is_host_alive(ip: str) -> bool:
     result = subprocess.run(
@@ -25,12 +26,19 @@ def scan_network(cidr: str) -> list[str]:
 
     return active_hosts
 
-def scan_active_hosts(active_hosts: list[str], ports: list[int]) -> list[PortScanResult]:
-    discovery_results: list[PortScanResult] = []
+def scan_active_hosts(active_hosts: list[str], ports: list[int]) -> list[HostScanResult]:
+    discovery_results: list[HostScanResult] = []
 
     for host in active_hosts:
-        host_results = run_scan(host, ports)
-        discovery_results.extend(host_results)
+        host_info = get_host_info(host)
+        port_results = run_scan(host, ports)
+
+        host_result = HostScanResult(
+            host=host_info,
+            ports=port_results
+        )
+
+        discovery_results.append(host_result)
 
     return discovery_results
 
