@@ -19,11 +19,20 @@ def build_parser() -> argparse.ArgumentParser:
         help="Ports to scan"
     )
 
-    parser.add_argument(
+    discovery_group = parser.add_mutually_exclusive_group()
+
+    discovery_group.add_argument(
         "-d",
         "--discover",
         action="store_true",
         help="Perform network discovery"
+    )
+
+    discovery_group.add_argument(
+        "-A",
+        "--agressive",
+        action="store_true",
+        help="Discover active hosts and port scan each host"
     )
 
     return parser

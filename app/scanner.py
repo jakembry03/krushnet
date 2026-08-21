@@ -44,6 +44,7 @@ def scan_target(ip: str, ports: list[int]) -> list[PortScanResult]:
 
                 open_ports.append(
                     PortScanResult(
+                        host=ip,
                         port=port,
                         status="open",
                         service=service,

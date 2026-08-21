@@ -2,6 +2,7 @@ from dataclasses import dataclass, asdict
 
 @dataclass
 class PortScanResult:
+    host: str
     port: int
     status: str = "open"
     protocol: str = "tcp"

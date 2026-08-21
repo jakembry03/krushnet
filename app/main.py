@@ -2,7 +2,7 @@ from app.validators import is_valid_ip
 from app.helpers import resolve_host
 from app.scanner import run_scan
 from app.cli import parse_args
-from app.discovery import scan_network
+from app.discovery import scan_network, scan_active_hosts
 
 
 def init_scanner(host: str):
@@ -19,9 +19,27 @@ def main():
 
     init_scanner(host)
 
-    if args.discover:
+    if args.agressive:
         active_hosts = scan_network(host)
+
+        print(f"Active hosts for {host}")
+        for active_host in active_hosts:
+            print(active_host)
+
+        print("-" * 50)
+        print("Beginning port scans...")
+        print("-" * 50)
+
+        scan_results = scan_active_hosts(active_hosts, ports)
+
+        for result in scan_results:
+            print(result)
+
+    elif args.discover:
+        active_hosts = scan_network(host)
+
         print(f"Active Hosts for {host}")
+        
         for host in active_hosts:
             print(host)
 
