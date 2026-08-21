@@ -28,9 +28,10 @@ def main():
     else:
         open_ports = run_scan(host, ports)
         if open_ports:
-            print("Open Ports:")
+            print("Open Ports: ")
+
             for port_info in open_ports:
-                print(f"Port {port_info['port']}: {port_info['status']}: {port_info['banner']}")
+                print(port_info)
         else:
             print("No open ports were found.")
 
