@@ -19,7 +19,7 @@ def main():
 
     init_scanner(host)
 
-    if args.agressive:
+    if args.discover and args.agressive:
         active_hosts = scan_network(host)
 
         print(f"Active hosts for {host}")
