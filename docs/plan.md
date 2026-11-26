@@ -136,6 +136,7 @@ Full stack and rules are in `CLAUDE.md`. New decisions get an ADR in `docs/adr/`
 
 - [ ] Discovery: periodic ARP sweep of the LAN subnet (configurable interval).
 - [ ] Discovery: passive listeners for ARP, mDNS and DHCP. Pull hostnames from DHCP option 12 and mDNS.
+  - Parsers done (PR 1.1, ADR 0005): frame -> MAC/IP/hostname observations, fuzz-tested. Capture comes in PR 1.4.
 - [ ] OUI vendor lookup from a bundled, updatable OUI file. Flag randomized MACs using the locally administered bit.
 - [ ] Device records:
   - MAC, current IP, hostname, vendor
