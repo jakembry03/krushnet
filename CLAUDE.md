@@ -36,7 +36,7 @@ Krushnet is a self-hosted DNS filtering and network-monitoring app for Jake's ap
 | Auth | Argon2 password hashing (`argon2-cffi`), server-side sessions, CSRF protection |
 | Config | TOML (`/etc/krushnet/krushnet.toml`, using `tomllib`) |
 | Tests | `pytest`, `pytest-asyncio` |
-| Lint / types | `ruff` (lint + format), `mypy` (strict on `policy/` and `dns/`) |
+| Lint / types | `ruff` (lint + format), `mypy` (strict on `policy/`, `dns/`, `discovery/` and `config.py`) |
 | Deploy | `git pull` on alfred + systemd units (one per service) |
 
 Don't add a dependency without explaining in the PR why it's needed and what the alternative was.
@@ -74,7 +74,7 @@ krushnet/
 uv sync                          # install deps
 uv run pytest                    # tests
 uv run ruff check . && uv run ruff format --check .
-uv run mypy src/krushnet/policy src/krushnet/dns
+uv run mypy                      # whole package; strict on policy/, dns/, discovery/, config
 ```
 
 During development on Jake's laptop (Arch), run the resolver on an unprivileged port (e.g. `5300`) and the portal on `127.0.0.1:8000`. Port 53 and raw sockets are for alfred only.
