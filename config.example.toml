@@ -1,0 +1,22 @@
+# Krushnet example configuration.
+#
+# Copy to /etc/krushnet/krushnet.toml on alfred and edit there. The real file
+# may hold secrets and must never be committed (hard rule 6).
+#
+# Sections only for now. The config loader PR (0.4) defines the fields,
+# their types and defaults, and fills this file in.
+
+[dns]
+# Listen address/port, block response mode, split-horizon names.
+
+[upstream]
+# Encrypted upstream providers (DNS-over-HTTPS; default Quad9), timeouts.
+
+[discovery]
+# Interface, subnet to scan, scan interval.
+
+[portal]
+# LAN and WireGuard bind addresses (never a public interface), session settings.
+
+[database]
+# SQLite path (e.g. /var/lib/krushnet/krushnet.db), query-log retention.

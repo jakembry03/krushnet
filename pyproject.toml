@@ -1,0 +1,81 @@
+[project]
+name = "krushnet"
+version = "0.1.0"
+description = "Self-hosted DNS filtering and network monitoring for a home network."
+readme = "README.md"
+authors = [{ name = "Jake" }]
+# Matches alfred (Ubuntu 26.04, Python 3.14). See .python-version.
+requires-python = ">=3.14"
+# Runtime dependencies are added by the PR that first needs them, with the
+# reason in its description (CLAUDE.md). dnslib: DNS wire format (ADR 0002),
+# already used by scripts/router_test_resolver.py and its tests.
+dependencies = ["dnslib>=0.9.24"]
+
+[project.scripts]
+krushnet = "krushnet.cli:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18",
+    "pytest>=8.4",
+    "pytest-asyncio>=1.2",
+    "ruff>=0.14",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+# --- ruff -------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # import sorting
+    "B",   # bugbear: likely bugs
+    "UP",  # pyupgrade: modern syntax
+    "SIM", # simplifications
+    "RUF", # ruff-specific checks
+    "PT",  # pytest style
+    "S",   # bandit: flags eval/exec, shell=True, SQL string building (hard rule 4)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Plain asserts are how pytest tests are written.
+"tests/**" = ["S101"]
+
+# --- mypy -------------------------------------------------------------------
+
+[tool.mypy]
+python_version = "3.14"
+mypy_path = "src"
+packages = ["krushnet"]
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+
+# Strict where correctness matters most (CLAUDE.md): DNS handling and policy.
+[[tool.mypy.overrides]]
+module = ["krushnet.dns.*", "krushnet.policy.*"]
+strict = true
+
+# dnslib ships no type information.
+[[tool.mypy.overrides]]
+module = ["dnslib", "dnslib.*"]
+ignore_missing_imports = true
+
+# --- pytest -----------------------------------------------------------------
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers", "--strict-config"]
+# Async tests must be marked explicitly with @pytest.mark.asyncio.
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
