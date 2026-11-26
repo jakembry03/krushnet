@@ -16,6 +16,7 @@ build/
 *.db-shm
 *.sqlite3
 krushnet.toml
+dev.toml
 
 # Editors / OS
 .idea/

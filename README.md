@@ -18,4 +18,15 @@ uv run mypy                                              # type check (strict on
 uv run krushnet --version
 ```
 
+Database (SQLite) commands read the database path from the config file:
+
+```bash
+KRUSHNET_CONFIG=./dev.toml uv run krushnet migrate      # create / upgrade the schema
+KRUSHNET_CONFIG=./dev.toml uv run krushnet db-status    # is the schema up to date?
+# after changing src/krushnet/db/models.py, generate and then review a migration:
+KRUSHNET_CONFIG=./dev.toml uv run alembic revision --autogenerate -m "describe change"
+```
+
+`dev.toml` is your local config (git-ignored). For example, copy `config.example.toml` and set `[database] path` to a file under this directory.
+
 During development, run the resolver on an unprivileged port (e.g. `5300`) and the portal on `127.0.0.1:8000`. Port 53 and raw sockets are for alfred only.
