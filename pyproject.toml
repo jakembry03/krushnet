@@ -7,9 +7,13 @@ authors = [{ name = "Jake" }]
 # Matches alfred (Ubuntu 26.04, Python 3.14). See .python-version.
 requires-python = ">=3.14"
 # Runtime dependencies are added by the PR that first needs them, with the
-# reason in its description (CLAUDE.md). dnslib: DNS wire format (ADR 0002),
-# already used by scripts/router_test_resolver.py and its tests.
-dependencies = ["dnslib>=0.9.24"]
+# reason in its description (CLAUDE.md).
+#   dnslib:   DNS wire format (ADR 0002); used by scripts/router_test_resolver.py.
+#   pydantic: config validation (ADR 0003).
+dependencies = [
+    "dnslib>=0.9.24",
+    "pydantic>=2.12",
+]
 
 [project.scripts]
 krushnet = "krushnet.cli:main"
@@ -54,6 +58,8 @@ select = [
 
 [tool.mypy]
 python_version = "3.14"
+# Ships with pydantic; lets mypy understand model fields and constructors.
+plugins = ["pydantic.mypy"]
 mypy_path = "src"
 packages = ["krushnet"]
 check_untyped_defs = true
@@ -61,9 +67,10 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 warn_return_any = true
 
-# Strict where correctness matters most (CLAUDE.md): DNS handling and policy.
+# Strict where correctness matters most (CLAUDE.md): DNS handling and policy,
+# plus config, which every service depends on.
 [[tool.mypy.overrides]]
-module = ["krushnet.dns.*", "krushnet.policy.*"]
+module = ["krushnet.dns.*", "krushnet.policy.*", "krushnet.config"]
 strict = true
 
 # dnslib ships no type information.

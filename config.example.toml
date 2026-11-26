@@ -1,22 +1,51 @@
 # Krushnet example configuration.
 #
-# Copy to /etc/krushnet/krushnet.toml on alfred and edit there. The real file
-# may hold secrets and must never be committed (hard rule 6).
+# Copy to /etc/krushnet/krushnet.toml on alfred and edit there. Never commit
+# the real file (hard rule 6). Check it with:  krushnet check-config
 #
-# Sections only for now. The config loader PR (0.4) defines the fields,
-# their types and defaults, and fills this file in.
+# Every key is optional; the values shown are the defaults, which are safe for
+# development (loopback only, unprivileged ports). Lines marked "alfred:" show
+# what a production value looks like. Unknown keys are rejected, so typos fail
+# loudly instead of being ignored.
 
 [dns]
-# Listen address/port, block response mode, split-horizon names.
+# Addresses the resolver listens on. alfred: its LAN IP (and WireGuard IP).
+listen = ["127.0.0.1"]
+# alfred: 53 (the systemd unit grants CAP_NET_BIND_SERVICE).
+port = 5300
+# What a blocked query gets: "null_ip" (0.0.0.0 / ::) or "nxdomain".
+block_response = "null_ip"
+
+# Names Krushnet answers itself (split-horizon). alfred: the portal's name.
+[dns.local_records]
+# "net.krushcomics.com" = "192.168.1.50"
 
 [upstream]
-# Encrypted upstream providers (DNS-over-HTTPS; default Quad9), timeouts.
+# DNS-over-HTTPS endpoints, tried in order. Must be https://.
+providers = ["https://dns.quad9.net/dns-query"]
+# Per-request timeout in seconds (0 < t <= 10).
+timeout_seconds = 2.0
 
 [discovery]
-# Interface, subnet to scan, scan interval.
+# Network interface to scan and listen on (`ip link`). Required by the
+# discovery service; alfred: the USB Ethernet adapter, e.g. "enx00e04c680001".
+# interface = "eth0"
+# LAN subnet to ARP-sweep. Must be private and /16 or smaller.
+subnet = "192.168.1.0/24"
+# Seconds between active ARP sweeps (minimum 30).
+scan_interval_seconds = 300
 
 [portal]
-# LAN and WireGuard bind addresses (never a public interface), session settings.
+# Addresses the web portal binds to. Only loopback or private (LAN/WireGuard)
+# addresses are accepted, never 0.0.0.0 or a public IP (hard rule 3).
+# alfred: ["192.168.1.50", "10.8.0.1"]
+listen = ["127.0.0.1"]
+port = 8000
+# How long a login lasts, in hours (1 to 720).
+session_hours = 12
 
 [database]
-# SQLite path (e.g. /var/lib/krushnet/krushnet.db), query-log retention.
+# SQLite database file; must be an absolute path.
+path = "/var/lib/krushnet/krushnet.db"
+# Days of DNS query history to keep (1 to 365).
+query_retention_days = 30
