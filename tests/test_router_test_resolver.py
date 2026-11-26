@@ -18,7 +18,8 @@ from dnslib import QTYPE, RCODE, RR, A, DNSRecord
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "router_test_resolver.py"
 _spec = importlib.util.spec_from_file_location("router_test_resolver", SCRIPT)
-assert _spec is not None and _spec.loader is not None
+assert _spec is not None
+assert _spec.loader is not None
 rtr = importlib.util.module_from_spec(_spec)
 sys.modules["router_test_resolver"] = rtr
 _spec.loader.exec_module(rtr)
@@ -116,9 +117,7 @@ def test_parse_host_port() -> None:
 
 
 def test_summary_lists_sources_by_count() -> None:
-    summary = rtr.format_summary(
-        collections.Counter({"192.168.1.1": 9, "192.168.1.20": 2})
-    )
+    summary = rtr.format_summary(collections.Counter({"192.168.1.1": 9, "192.168.1.20": 2}))
     assert summary.index("192.168.1.1 ") < summary.index("192.168.1.20")
 
 

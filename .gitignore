@@ -1,0 +1,24 @@
+# Python / tooling
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# Local data: never commit databases or real config (hard rule 6).
+# Real config lives in /etc/krushnet/ on alfred; only config.example.toml is tracked.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+krushnet.toml
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store

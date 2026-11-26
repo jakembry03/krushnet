@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.14"
 # dependencies = ["dnslib>=0.9.24"]
 # ///
 """Throwaway DNS forwarder for the Phase 0 router test.
@@ -60,7 +60,7 @@ def parse_query(data: bytes) -> Query | None:
         return None
     try:
         record = DNSRecord.parse(data)
-    except (DNSError, ValueError, IndexError, UnicodeError):
+    except DNSError, ValueError, IndexError, UnicodeError:
         # dnslib raises several exception types on malformed input.
         return None
     # A response (QR=1) sent to us, or a query without exactly one question,
@@ -86,7 +86,7 @@ def is_matching_response(query: DNSRecord, data: bytes) -> bool:
         return False
     try:
         response = DNSRecord.parse(data)
-    except (DNSError, ValueError, IndexError, UnicodeError):
+    except DNSError, ValueError, IndexError, UnicodeError:
         return False
     return bool(
         response.header.qr == 1
@@ -124,9 +124,7 @@ class _UpstreamProtocol(asyncio.DatagramProtocol):
             self._result.set_exception(exc)
 
 
-async def forward(
-    query: DNSRecord, raw: bytes, upstream: tuple[str, int], timeout: float
-) -> bytes:
+async def forward(query: DNSRecord, raw: bytes, upstream: tuple[str, int], timeout: float) -> bytes:
     """Send the client's query upstream and return the reply bytes.
 
     A fresh socket per query gives each lookup a random source port, which
@@ -156,7 +154,10 @@ class ResolverProtocol(asyncio.DatagramProtocol):
         self._tasks: set[asyncio.Task[None]] = set()
 
     def connection_made(self, transport: asyncio.BaseTransport) -> None:
-        assert isinstance(transport, asyncio.DatagramTransport)
+        # Always true for a datagram endpoint; checked explicitly, not with
+        # assert, so it still holds under `python -O`.
+        if not isinstance(transport, asyncio.DatagramTransport):
+            raise TypeError(f"expected a datagram transport, got {type(transport).__name__}")
         self._transport = transport
 
     def datagram_received(self, data: bytes, addr: tuple[str | int, ...]) -> None:
@@ -179,9 +180,7 @@ class ResolverProtocol(asyncio.DatagramProtocol):
         self._tasks.add(task)
         task.add_done_callback(self._tasks.discard)
 
-    async def _answer(
-        self, raw: bytes, query: Query, addr: tuple[str | int, ...]
-    ) -> None:
+    async def _answer(self, raw: bytes, query: Query, addr: tuple[str | int, ...]) -> None:
         src_ip = str(addr[0])
         try:
             reply = await forward(query.record, raw, self.upstream, self.timeout)
@@ -221,9 +220,7 @@ def parse_host_port(value: str) -> tuple[str, int]:
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description=__doc__.split("\n")[0] if __doc__ else None
-    )
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0] if __doc__ else None)
     parser.add_argument(
         "--listen",
         type=parse_host_port,
@@ -254,9 +251,7 @@ async def serve(args: argparse.Namespace) -> collections.Counter[str]:
     for sig in (signal.SIGINT, signal.SIGTERM):
         loop.add_signal_handler(sig, stop.set)
     host, port = args.listen
-    print(
-        f"listening on {host}:{port}, forwarding to {args.upstream[0]}:{args.upstream[1]}"
-    )
+    print(f"listening on {host}:{port}, forwarding to {args.upstream[0]}:{args.upstream[1]}")
     print("Ctrl-C to stop and print the per-source summary.", flush=True)
     try:
         await stop.wait()

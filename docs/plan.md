@@ -116,7 +116,7 @@ Full stack and rules are in `CLAUDE.md`. New decisions get an ADR in `docs/adr/`
 - [ ] Run tcpdump or Wireshark on alfred for an evening. Note which broadcasts are visible (ARP, mDNS, DHCP).
 
 **Claude Code:**
-- [ ] Scaffold the repo: `pyproject.toml` with uv, ruff/mypy/pytest config, the package skeleton from `CLAUDE.md`, and `config.example.toml`.
+- [x] Scaffold the repo: `pyproject.toml` with uv, ruff/mypy/pytest config, the package skeleton from `CLAUDE.md`, and `config.example.toml`.
 - [ ] Config loader (TOML → typed settings object) with tests.
 - [ ] DB setup: SQLAlchemy models (devices, queries, lists, list entries, rules, users) + first Alembic migration. Propose the schema to Jake first.
 - [x] `docs/adr/0001-separate-repo.md` and `0002-stack.md`, recording the decisions above.
