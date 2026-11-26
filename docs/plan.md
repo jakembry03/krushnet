@@ -120,7 +120,7 @@ Full stack and rules are in `CLAUDE.md`. New decisions get an ADR in `docs/adr/`
 - [ ] Config loader (TOML → typed settings object) with tests.
 - [ ] DB setup: SQLAlchemy models (devices, queries, lists, list entries, rules, users) + first Alembic migration. Propose the schema to Jake first.
 - [x] `docs/adr/0001-separate-repo.md` and `0002-stack.md`, recording the decisions above.
-- [ ] A minimal throwaway resolver script for the router test: logs each query's source IP and forwards it upstream.
+- [x] A minimal throwaway resolver script for the router test (`scripts/router_test_resolver.py`; run steps in `scripts/README.md`): logs each query's source IP and forwards it upstream.
 
 **Phase 0 results** (fill in):
 - Router DNS behavior: _TBD_
