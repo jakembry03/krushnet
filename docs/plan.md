@@ -117,7 +117,7 @@ Full stack and rules are in `CLAUDE.md`. New decisions get an ADR in `docs/adr/`
 
 **Claude Code:**
 - [x] Scaffold the repo: `pyproject.toml` with uv, ruff/mypy/pytest config, the package skeleton from `CLAUDE.md`, and `config.example.toml`.
-- [ ] Config loader (TOML → typed settings object) with tests.
+- [x] Config loader (TOML → typed settings object) with tests. Uses pydantic (ADR 0003); `krushnet check-config` validates a file.
 - [ ] DB setup: SQLAlchemy models (devices, queries, lists, list entries, rules, users) + first Alembic migration. Propose the schema to Jake first.
 - [x] `docs/adr/0001-separate-repo.md` and `0002-stack.md`, recording the decisions above.
 - [x] A minimal throwaway resolver script for the router test (`scripts/router_test_resolver.py`; run steps in `scripts/README.md`): logs each query's source IP and forwards it upstream.
